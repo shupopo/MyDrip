@@ -13,6 +13,8 @@
         --line: rgba(57, 45, 36, 0.12);
         --accent: #b4572f;
         --accent-soft: rgba(180, 87, 47, 0.08);
+        --form-accent: #2563eb;
+        --form-accent-hover: #1d4ed8;
       }
 
       * {
@@ -127,6 +129,108 @@
         border: 1px solid rgba(180, 87, 47, 0.12);
       }
 
+      .contact-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .form-card {
+        padding: 28px;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: var(--panel);
+      }
+
+      .form-intro {
+        margin-bottom: 24px;
+      }
+
+      .contact-form {
+        display: grid;
+        gap: 22px;
+      }
+
+      .field label {
+        display: block;
+        margin-bottom: 10px;
+        color: #374151;
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .field input,
+      .field textarea {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid #d1d5db;
+        border-radius: 10px;
+        font: inherit;
+        color: var(--text);
+        background: #ffffff;
+        outline: none;
+        transition: border-color 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .field input:focus,
+      .field textarea:focus {
+        border-color: var(--form-accent);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.14);
+      }
+
+      .field textarea {
+        min-height: 220px;
+        resize: vertical;
+      }
+
+      .submit-button {
+        width: 100%;
+        padding: 16px 22px;
+        border: 0;
+        border-radius: 10px;
+        background: var(--form-accent);
+        color: #ffffff;
+        font: inherit;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.18s ease, transform 0.12s ease;
+      }
+
+      .submit-button:hover:not(:disabled) {
+        background: var(--form-accent-hover);
+        transform: translateY(-1px);
+      }
+
+      .submit-button:disabled {
+        background: #9ca3af;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .status-message {
+        display: none;
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .status-message.is-visible {
+        display: block;
+      }
+
+      .status-message.is-success {
+        background: #dcfce7;
+        color: #166534;
+      }
+
+      .status-message.is-error {
+        background: #fee2e2;
+        color: #b91c1c;
+      }
+
       .faq dt {
         margin-top: 16px;
         font-weight: 700;
@@ -148,6 +252,10 @@
         .grid {
           grid-template-columns: 1fr;
         }
+
+        .contact-layout {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -162,21 +270,55 @@
         <span class="label">Support</span>
         <h1>MyDrip サポート</h1>
         <p class="lead">
-          MyDrip の使い方、問い合わせ先、Issue 受付方法をまとめたサポートページです。Chrome Web Store の掲載情報として使えるよう、利用案内とトラブル時の窓口を1ページに整理しています。
+          MyDrip の使い方、問い合わせ先、よくある質問をまとめたサポートページです。Chrome Web Store の掲載情報として使えるよう、利用案内と問い合わせ窓口を1ページに整理しています。
         </p>
       </header>
 
-      <div class="grid">
+      <section class="contact-layout">
         <section class="card">
           <h2>問い合わせ先</h2>
-          <p>不具合報告や改善要望は、以下のいずれかの方法で連絡できます。</p>
+          <p>MyDrip に関する不具合報告、ご質問、改善要望は、下記フォームから送信してください。</p>
           <ul>
-            <li>Chrome Web Store のサポート欄からお問い合わせ</li>
-            <li>GitHub Issues: <a href="https://github.com/shupopo/fashion-wishlist/issues" target="_blank" rel="noreferrer">https://github.com/shupopo/fashion-wishlist/issues</a></li>
-            <li>Issue 作成時は、利用サイト、発生した内容、再現手順、スクリーンショットがあると確認が速くなります。</li>
+            <li>お問い合わせ内容はフォーム送信後、登録先へ送られます。</li>
+            <li>不具合報告では、利用サイト名、発生した内容、再現手順、スクリーンショットがあると確認が速くなります。</li>
+            <li>返信が必要な場合は、連絡可能なメールアドレスを入力してください。</li>
           </ul>
         </section>
 
+        <section class="form-card">
+          <div class="form-intro">
+            <h2>お問い合わせフォーム</h2>
+            <p>必要事項を入力のうえ送信してください。</p>
+          </div>
+
+          <form class="contact-form" id="contact-form">
+            <div class="field">
+              <label for="name">お名前 *</label>
+              <input type="text" id="name" name="name" required />
+            </div>
+
+            <div class="field">
+              <label for="email">メールアドレス *</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+
+            <div class="field">
+              <label for="subject">件名 *</label>
+              <input type="text" id="subject" name="subject" required />
+            </div>
+
+            <div class="field">
+              <label for="message">メッセージ *</label>
+              <textarea id="message" name="message" required></textarea>
+            </div>
+
+            <div class="status-message" id="form-status" aria-live="polite"></div>
+            <button class="submit-button" id="submit-button" type="submit">送信する</button>
+          </form>
+        </section>
+      </section>
+
+      <div class="grid">
         <section class="card">
           <h2>ヘルプ</h2>
           <ul>
@@ -194,22 +336,13 @@
             <li>保存データは外部サーバーへ送信されません。詳しくは <a href="./privacy-policy.html">プライバシーポリシー</a> を確認してください。</li>
           </ul>
         </section>
-
-        <section class="card">
-          <h2>Issue 受付先</h2>
-          <p>不具合や要望の管理は GitHub Issues で受け付けています。</p>
-          <ul>
-            <li>新規 Issue 作成: <a href="https://github.com/shupopo/fashion-wishlist/issues/new" target="_blank" rel="noreferrer">https://github.com/shupopo/fashion-wishlist/issues/new</a></li>
-            <li>既存 Issue 一覧: <a href="https://github.com/shupopo/fashion-wishlist/issues" target="_blank" rel="noreferrer">https://github.com/shupopo/fashion-wishlist/issues</a></li>
-          </ul>
-        </section>
       </div>
 
       <section class="card" style="margin-top: 18px;">
         <h2>FAQ</h2>
         <dl class="faq">
           <dt>Q. 保存しても価格や画像が正しく取得できないことがあります。</dt>
-          <dd>A. サイト側の構造によっては一部情報を自動取得しづらい場合があります。対象ページの URL と状況を添えて Issue を送ってください。</dd>
+          <dd>A. サイト側の構造によっては一部情報を自動取得しづらい場合があります。対象ページの URL と状況を添えてお問い合わせフォームからご連絡ください。</dd>
 
           <dt>Q. 保存したデータはどこにありますか。</dt>
           <dd>A. データはブラウザ内の <code>chrome.storage.local</code> に保存されます。サーバーへの同期や外部送信は行いません。</dd>
@@ -225,7 +358,7 @@
       <div class="contact-box">
         <strong>サポート窓口まとめ</strong>
         <p style="margin-top: 10px;">
-          一般的な問い合わせは Chrome Web Store のサポート欄、不具合報告や改善提案は GitHub Issues の利用が適しています。
+          ご質問、不具合報告、改善提案は、このページ内のお問い合わせフォームから受け付けています。
         </p>
       </div>
 
@@ -233,5 +366,53 @@
         MyDrip Support Page
       </footer>
     </div>
+    <script>
+      const form = document.getElementById("contact-form");
+      const submitButton = document.getElementById("submit-button");
+      const status = document.getElementById("form-status");
+
+      const setStatus = (type, message) => {
+        status.className = "status-message is-visible";
+        if (type === "success") {
+          status.classList.add("is-success");
+        } else if (type === "error") {
+          status.classList.add("is-error");
+        }
+        status.textContent = message;
+      };
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        submitButton.disabled = true;
+        submitButton.textContent = "送信中...";
+        status.className = "status-message";
+        status.textContent = "";
+
+        const formData = Object.fromEntries(new FormData(form).entries());
+
+        try {
+          const response = await fetch("https://formspree.io/f/xandvepa", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          });
+
+          if (!response.ok) {
+            throw new Error("Failed to submit form");
+          }
+
+          form.reset();
+          setStatus("success", "お問い合わせありがとうございます。追って連絡いたします。");
+        } catch (error) {
+          console.error("Form submission error:", error);
+          setStatus("error", "送信に失敗しました。しばらくしてから再度お試しください。");
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "送信する";
+        }
+      });
+    </script>
   </body>
 </html>
